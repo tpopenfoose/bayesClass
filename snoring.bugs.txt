@@ -1,0 +1,22 @@
+model{
+   # likelihood
+ for(i in 1:2484){
+   heart.disease[i]~dbern(p.hd[i])
+   logit(p.hd[i])<-alpha+b.snore[snoring[i]]
+    }
+
+   # priors
+    alpha~dnorm(0,.001)
+    b.snore[1]<-0
+
+    for(j in 2:4){
+          b.snore[j]~dnorm(0,.01)
+     }
+
+ or.snore[2]<-exp(b.snore[2])
+ or.snore[3]<-exp(b.snore[3])
+ or.snore[4]<-exp(b.snore[4])
+
+}
+
+

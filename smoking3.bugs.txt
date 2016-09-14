@@ -1,0 +1,23 @@
+
+
+##Or alternatively using indexing
+
+model{
+
+	#likelihood
+	for(i in 1:10){
+		y[i]~dnorm(mu[i],prec)                      #note this uses precision not variance
+		mu[i]<-b0+b1*x1[i]+b2[x2[i]]		    #functional form of the mean
+		
+	}
+
+	#priors
+	
+		b0~dnorm(0,0.01) 	#diffuse prior on the intercept
+		b1~dnorm(0,0.01)	#diffuse prior on the slope of beta1
+		b2[1]~dnorm(0,0.01)	# diffuse prior on the slope of beta2
+		b2[2]<-0		#reference group is tobacco producing state
+		prec<-1/vari
+		vari~dunif(0,500)  	 	#prior on variance  dgamma(10,10)
+	
+}

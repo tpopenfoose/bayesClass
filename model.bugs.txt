@@ -1,0 +1,14 @@
+model
+{
+  #likelihood
+  	for(i in 1:24) 
+			{
+			refuel[i]~dbern(disconnect.prob)
+			}
+			
+	#prior
+		disconnect.prob~dbeta(alpha,beta)
+		alpha<-15
+		beta<-15
+	}
+		

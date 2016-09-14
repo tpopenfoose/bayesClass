@@ -1,0 +1,25 @@
+model{
+#likelihood
+drugAbenefit~dbin(propA,numA)
+drugBbenefit~dbin(propB,numB)
+
+#priors
+propA~dbeta(alphaA,betaA)
+propB~dbeta(alphaB,betaB)
+
+alphaA<-1
+betaA<-1
+alphaB<-1
+betaB<-1
+
+#derived quantities
+
+rrBA<-propB/propA
+diffBA<-propB-propA
+
+}
+
+
+
+
+

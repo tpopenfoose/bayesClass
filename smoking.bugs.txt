@@ -1,0 +1,17 @@
+model{
+
+	#likelihood
+	for(i in 1:10){
+		y[i]~dnorm(mu[i],prec);    # y is smoking prevalence. Note this uses precision not variance
+		mu[i]<-b0+b1*x1[i]	   #x1 is strength of state law and mu is functional form of the mean
+		
+	}
+
+	#priors
+	
+		b0~dnorm(0,0.01)  	#diffuse prior on the intercept
+		b1~dnorm(0,0.01)	#diffuse prior on the slope
+		prec<-1/vari
+		vari~dunif(0,500) ; 	#prior on variance  dgamma(10,10)
+	
+}

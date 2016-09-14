@@ -1,0 +1,19 @@
+library(R2jags)
+
+setwd("U:\\Courses\\Workshops\\DOD 2016\\Examples for Workshop\\scripting in JAGS\\Intro example")
+
+
+jags(data, inits, parameters.to.save, model.file="model.bug",
+n.chains=3, n.iter=2000, n.burnin=floor(n.iter/2),
+n.thin=max(1, floor((n.iter - n.burnin) / 1000)),
+DIC=TRUE, working.directory=NULL, jags.seed = 123,
+refresh = n.iter/50, progress.bar = "text", digits=5,
+RNGname = c("Wichmann-Hill", "Marsaglia-Multicarry",
+"Super-Duper", "Mersenne-Twister"),
+jags.module = c("glm","dic")
+)
+
+
+jags.inits<-function(){list("disconnect.prob"=c(0.65,0.10,0.03)}
+jags.params<-c("disconnect.prob")
+jags("data.bugs.txt",jags.inits,jags.params,model.file="model.bugs.txt",n.chains=2,n.iter=10000,n.burnin=1000)

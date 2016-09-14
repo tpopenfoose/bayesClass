@@ -1,0 +1,22 @@
+
+   model
+      {
+  
+  #likelihood
+      for(i in 1:N)
+       {
+          sbp[i]~dnorm(mu,tau)  #note this uses precision not variance
+       }
+  
+  #priors
+  
+       mu~dnorm(120,0.0001)        #diffuse prior on mean
+       sd~dunif(0,500)               #diffuse prior on sd
+       tau<-1/(sd*sd)		  #compute precision from sd
+  #vari<-1/tau
+  
+  #missing data value
+  
+      sbp19~dnorm(mu,tau)
+  
+  }
