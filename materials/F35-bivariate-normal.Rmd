@@ -1,0 +1,99 @@
+---
+title: "Bayes Lectures"
+author: "Jason K Freels"
+date: "September 14, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mvtnorm)
+```
+
+# Means, variances & covariances of the bivariate normal
+
+```{r}
+mu.x <- 921
+mu.y <- 5
+
+s.x<-100^2
+s.y<-3^2
+s.xy<-15^2
+```
+
+
+# Plotting the contours of this bivtnormal
+
+```{r}
+x <- seq(610, 1227, by= 1)
+y <- seq(0,10,length=length(x))
+
+z<-array(0,dim=c(length(x),length(y)))
+Sigma<- matrix(c(s.x,s.xy,s.xy, s.y), 2)
+
+z <- dmvnorm(x=c(x,y),mean=matrix(c(mu.x,mu.y), ncol = 2),sigma=Sigma)
+
+contour(x,y,z,xlab="MPH", ylab="Radial Accuracy",main="F-35 Speed vs Accuracy")
+abline(v=mu.x)
+abline(h=mu.y)
+```
+
+#############################################
+#Writing a simple Gibbs sampler
+#############################################
+
+mph <- 0    #initial values
+rad <- 0    #initial values
+B <- 10000
+pts <- matrix(NA,ncol=2,nrow=B)
+
+mph<-rnorm(B,mu.x+s.xy*solve(s.y)*(rad-mu.y),sqrt(s.x-s.xy*solve(s.y)*s.xy))
+rad<-rnorm(B,mu.y+s.xy*solve(s.x)*(mph-mu.x),sqrt(s.y-s.xy*solve(s.x)*s.xy))
+			
+pts <- c(mph, rad)
+
+
+#############################################
+#plotting the samples points
+#############################################
+
+
+#############################################
+#showing the random walk
+#############################################
+
+for(i in 2:1000){
+
+    		points(pts[i-1,1],pts[i-1,2],pch=16)
+		time<-Sys.time()
+		while(Sys.time()<time+1/sqrt(i)){}
+
+            lines(c(pts[i-1,1], pts[i,1]), c(pts[i-1,2], pts[i-1,2]))
+		time<-Sys.time()
+		while(Sys.time()<time+1/sqrt(i)){}
+
+
+		points(pts[i,1],pts[i-1,2],pch=16)
+            time<-Sys.time()
+		while(Sys.time()<time+1/sqrt(i)){}
+
+		lines(c(pts[i,1], pts[i,1]), c(pts[i-1,2], pts[i,2]))
+		time<-Sys.time()
+		while(Sys.time()<time+1/sqrt(i)){}
+
+
+}
+
+
+
+
+#############################################
+#showing just the points 
+#############################################
+
+contour(x,y,z,xlab="MPH", ylab="Radial Accuracy",main="F-35 Speed vs Accuracy")
+abline(v=mu.x)
+abline(h=mu.y)
+
+
+points(pts[,1],pts[,2],pch = 16)

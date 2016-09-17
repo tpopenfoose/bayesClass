@@ -21,8 +21,9 @@ setwd("U:\\Courses\\Workshops\\DOD 2016\\Examples for Workshop\\scripting in JAG
 ##############################################################
 
 
-jags.inits<-function(){list("disconnect.prob"=c(0.65,0.10,0.03)}
+jags.inits<-list(list("disconnect.prob" = 0.65), list("disconnect.prob" = 0.10),list("disconnect.prob" = 0.03)) 
 
+jags.inits2 <- function() list("disconnect.prob"=.65,"disconnect.prob"=.10,"disconnect.prob"=0.03)
 
 ##############################################################
 #### Specify the parameters to be monitored   ################
@@ -34,7 +35,13 @@ jags.params<-c("disconnect.prob")
 #### Save and display MCMC results            ################
 ##############################################################
 
-jagsfit<-jags("data.bugs.txt",jags.inits,jags.params,model.file="model.bugs.txt",n.chains=3,n.iter=10000,n.burnin=1000)
+jagsfit<-jags("materials/data.bugs.txt",
+              jags.inits,
+              jags.params,
+              model.file="materials/model.bugs.txt",
+              n.chains=3,
+              n.iter=10000,
+              n.burnin=1000)
 jagsfit
 
 ##############################################################

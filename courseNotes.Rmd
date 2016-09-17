@@ -9,14 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Parts 5 & 6 - MCMC
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r f35}
+X_Y <- $NOR($
+                                          
+x_y <- function(mu, var, y) {
+  
+  rnorm(mu[1,1]+var[1,2]/var[2,2]*(y-mu[2,1]
+  
+}
 ```
 
 ## Including Plots
