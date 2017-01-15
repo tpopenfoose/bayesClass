@@ -26,7 +26,7 @@ dat<-list(N=19,sbp=c(121,94,119,122,142,168,116,172,155,107,180,119,157,101,145,
 ##############################################################
 #### Save and display MCMC results            ################
 ##############################################################
-jagsfit<-jags(data=dat,jags.inits,jags.params,model.file="sbp.bugs.missing.txt",n.chains=2,n.iter=10000,n.burnin=1000,n.thin=1)
+jagsfit<-jags(data=dat,jags.inits,jags.params,model.file="materials/sbp.bugs.missing.txt",n.chains=2,n.iter=10000,n.burnin=1000,n.thin=1)
 jagsfit
 
 jagsfit.mcmc<-as.mcmc(jagsfit)

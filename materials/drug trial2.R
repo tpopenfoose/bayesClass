@@ -3,6 +3,7 @@ library(mcmcplots)
 
 #setwd("U:\\Courses\\Workshops\\DOD 2016\\Examples for Workshop\\SBP Example")
 
+drug <- tempfile()
 
 ##############################################################
 #### Create Initial Values as a funtion       ################
@@ -52,7 +53,7 @@ cat('
   
   }', 
   fill =TRUE,
-  file = "spb.bugs.missing.txt")
+  file = drug)
 
 ##############################################################
 #### Save and display MCMC results            ################
@@ -60,7 +61,7 @@ cat('
 jagsfit<-jags(data=dat,
               inits = jags.inits,
               parameters.to.save=jags.params,
-              model.file="spb.bugs.missing.txt",
+              model.file=drug,
               n.chains=2,
               n.iter=10000,
               n.burnin=1000,

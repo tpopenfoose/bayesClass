@@ -8,25 +8,32 @@ setwd("U:\\Courses\\Workshops\\DOD 2016\\Examples for Workshop\\SBP Example")
 ##############################################################
 
 
-jags.inits<-list(list("mu"=50,"sd"=20),list("mu"=100,"sd"=3))
+jags.inits<-list(list("propA"=.3,"propB"=.1),list("propA"=.05,"propB"=.95))
 
 
 ##############################################################
 #### Specify the parameters to be monitored   ################
 ##############################################################
 
-jags.params<-c("mu","sd","tau","sbp19")
+jags.params<-c("propA","propB","rrBA")
 
 ##############################################################
 #### Another way to define the data           ################
 ##############################################################
 
-dat<-list(N=19,sbp=c(121,94,119,122,142,168,116,172,155,107,180,119,157,101,145,148,120,147,NA))
+dat<-list(numA=100,numB=100,drugAbenefit=60,drugBbenefit=75)
 
 ##############################################################
 #### Save and display MCMC results            ################
 ##############################################################
-jagsfit<-jags(data=dat,jags.inits,jags.params,model.file="sbp.bugs.missing.txt",n.chains=2,n.iter=10000,n.burnin=1000,n.thin=1)
+jagsfit<-jags(data = dat,
+              jags.inits,
+              jags.params,
+              model.file = "materials/drugtrial.bugs.txt",
+              n.chains = 2,
+              n.iter = 10000,
+              n.burnin = 1000,
+              n.thin = 1)
 jagsfit
 
 jagsfit.mcmc<-as.mcmc(jagsfit)
@@ -36,7 +43,7 @@ jagsfit.mcmc<-as.mcmc(jagsfit)
 library(mcmcplots)
 plot(jagsfit.mcmc)
 caterplot(jagsfit.mcmc)
-traceplot(jagsfit.mcmc)     #need to click on the output window to cycle through the plots
+R2jags::traceplot(jagsfit.mcmc)     #need to click on the output window to cycle through the plots
 
 
 raftery.diag(jagsfit.mcmc)
